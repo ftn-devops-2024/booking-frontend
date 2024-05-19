@@ -1,0 +1,36 @@
+<div class="p-5 vh-100 hero-main">
+
+  <div class="row">
+    <div class="container shadow-lg px-4 py-3 col-9 rounded-4 bg-light">
+      <h1 class="pb-3" style="font-size: 35px" >Edit profile<i class="fa-solid fa-edit px-1 "></i></h1>
+      <div>
+        <div class="row pt-3 px-2">
+
+          <div class="col-5 pb-3">
+            <input type="text" class="form-control" placeholder="First name" [(ngModel)]="user.name">
+          </div>
+          <div class="col-5 pb-3">
+          <input type="text" class="form-control" placeholder="Last name" [(ngModel)]="user.surname">
+          </div>
+          <div class="col-5 pb-3">
+            <input type="text" class="form-control" placeholder="Address" [(ngModel)]="user.address">
+          </div>
+          <div class="col-5 pb-3">
+          </div>
+          <div class="col-5 pb-3">
+            <input type="text" class="form-control" email placeholder="Email" [(ngModel)]="user.email">
+          </div>
+
+          <div class="col-5 pb-3">
+          <input type="password" class="form-control" placeholder="Password" [(ngModel)]="user.password">
+          </div>
+            <div class="pt-3 pb-2"></div>
+          <div class="col-5">
+            <button  class="btn btn-dark" type="submit">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
