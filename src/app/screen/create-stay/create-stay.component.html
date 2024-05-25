@@ -1,0 +1,51 @@
+<div class="p-5 vh-100 hero-main">
+
+  <div class="row">
+    <div class="container shadow-lg px-4 py-3 col-9 rounded-4 bg-light">
+      <div class="row">
+        <h1 class="pb-3 col-10" style="font-size: 35px" >Create stay<i class="fa-solid fa-house px-1 "></i></h1>
+      </div>
+
+      <div>
+        <div class="row pt-3 px-2">
+
+          <div class="col-6 pb-3">
+            <input type="text" class="form-control" placeholder="Name" [(ngModel)]="stay.name">
+          </div>
+          <div class="col-6 pb-3">
+            <input type="text" class="form-control" placeholder="Location" [(ngModel)]="stay.location">
+          </div>
+          <div class="col-2 pb-3">
+            <label>Minimum guests</label>
+            <input type="number" class="form-control" placeholder="Min guests" [(ngModel)]="stay.minGuest">
+          </div>
+          <div class="col-2 pb-3">
+            <label>Maximum guests</label>
+            <input type="number" class="form-control" email placeholder="Max guests" [(ngModel)]="stay.maxGuest">
+          </div>
+          <div class="mb-3 col-8">
+            <label>Photos</label>
+            <input class="form-control" type="file" accept="image/*" id="formFileMultiple" (change)="onFileSelected($event)" multiple>
+          </div>
+          <div class="col-4 pt-2">
+            <ng-multiselect-dropdown
+              [placeholder]="'Choose benefits'"
+              [settings]="dropdownSettings"
+              [data]="dropdownList"
+              [(ngModel)]="selectedItems"
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+            >
+            </ng-multiselect-dropdown>
+          </div>
+
+          <div class="pt-3 pb-2"></div>
+          <div class="col-5">
+            <button class="btn btn-dark" type="submit" (click)="save()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
