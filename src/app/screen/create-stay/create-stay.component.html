@@ -17,11 +17,11 @@
           </div>
           <div class="col-2 pb-3">
             <label>Minimum guests</label>
-            <input type="number" class="form-control" placeholder="Min guests" [(ngModel)]="stay.minGuest">
+            <input type="number" class="form-control" placeholder="Min guests" [(ngModel)]="stay.minGuests">
           </div>
           <div class="col-2 pb-3">
             <label>Maximum guests</label>
-            <input type="number" class="form-control" placeholder="Max guests" [(ngModel)]="stay.maxGuest">
+            <input type="number" class="form-control" placeholder="Max guests" [(ngModel)]="stay.maxGuests">
           </div>
           <div class="mb-3 col-8">
             <label>Photos</label>
@@ -62,8 +62,8 @@
                       <mat-form-field>
                         <mat-label>Enter a date range</mat-label>
                         <mat-date-range-input [rangePicker]="picker" [min]="today" >
-                          <input matStartDate placeholder="Start date" [(ngModel)]="r.start">
-                          <input matEndDate placeholder="End date" [(ngModel)]="r.end">
+                          <input matStartDate placeholder="Start date" [(ngModel)]="r.startDate">
+                          <input matEndDate placeholder="End date" [(ngModel)]="r.endDate">
                         </mat-date-range-input>
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-date-range-picker #picker ></mat-date-range-picker>
@@ -92,8 +92,8 @@
                       <mat-form-field>
                         <mat-label>Enter a date range</mat-label>
                         <mat-date-range-input [rangePicker]="picker" [min]="today" >
-                          <input matStartDate placeholder="Start date" [(ngModel)]="r.start">
-                          <input matEndDate placeholder="End date" [(ngModel)]="r.end">
+                          <input matStartDate placeholder="Start date" [(ngModel)]="r.startDate">
+                          <input matEndDate placeholder="End date" [(ngModel)]="r.endDate">
                         </mat-date-range-input>
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-date-range-picker #picker ></mat-date-range-picker>

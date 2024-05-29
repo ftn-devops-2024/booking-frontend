@@ -90,7 +90,7 @@ export class CreateStayComponent implements OnInit{
   }
 
   save(){
-    this.stay.benefits = this.selectedItems.map(item => item.item_text);
+    this.stay.perks = this.selectedItems.map(item => item.item_text);
     console.log(this.selectedItems);
     console.log(this.stay);
     this.reservationService.createStay(this.stay).subscribe(
