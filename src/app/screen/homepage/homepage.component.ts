@@ -11,7 +11,9 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatInputModule } from '@angular/material/input';
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatIcon} from "@angular/material/icon";
-import {MatMiniFabButton} from "@angular/material/button";
+import {MatButton, MatMiniFabButton} from "@angular/material/button";
+import {NgForOf} from "@angular/common";
+import {StayListTileComponent} from "../../component/stay-list-tile/stay-list-tile.component";
 
 @Component({
   selector: 'app-homepage',
@@ -27,7 +29,10 @@ import {MatMiniFabButton} from "@angular/material/button";
     MatDatepickerModule,
     MatNativeDateModule,
     MatIcon,
-    MatMiniFabButton
+    MatMiniFabButton,
+    NgForOf,
+    MatButton,
+    StayListTileComponent
   ],providers:[
     MatDatepickerModule
   ],
@@ -36,11 +41,5 @@ import {MatMiniFabButton} from "@angular/material/button";
 })
 export class HomepageComponent {
   startDate:Date = new Date();
-  myFilter = (d: Date | null): boolean => {
-    const day = (d || new Date()).getDay();
-    // Prevent Saturday and Sunday from being selected.
-    return (d || new Date()) > new Date();
-  };
-
-  protected readonly Date = Date;
+  perks:String[]=['Wi-fi','Parking','Pet friendly'];
 }
