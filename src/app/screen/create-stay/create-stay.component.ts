@@ -20,6 +20,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import {NgForOf, NgIf} from "@angular/common";
 import {ReservationService} from "../../service/reservation.service";
 import {HttpClientModule} from "@angular/common/http";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -51,13 +52,13 @@ export class CreateStayComponent implements OnInit{
   selectedItems:any[] = [];
   dropdownSettings:IDropdownSettings = {};
   today:Date = new Date();
+  stayId:string = '';
 
-  constructor(private reservationService: ReservationService) {
+  constructor(private route: ActivatedRoute,private reservationService: ReservationService) {
   }
 
   ngOnInit() {
-    this.stay.availabilityPeriods.push(new DateRange())
-    this.stay.specialPrices.push(new SpecialPrices())
+    this.stayId = this.route.snapshot.paramMap.get('id') ?? '0';
     this.dropdownList = [
       { item_id: 1, item_text: 'Parking' },
       { item_id: 2, item_text: 'Wi-fi' },
@@ -74,6 +75,19 @@ export class CreateStayComponent implements OnInit{
       itemsShowLimit: 3,
       allowSearchFilter: true
     };
+    if(this.stayId == '0'){ //nova
+      this.stay.availabilityPeriods.push(new DateRange())
+      this.stay.specialPrices.push(new SpecialPrices())
+    }else{
+      //nadji u bazi i promeni stay
+      this.selectedItems = ['Wi-fi'];
+      this.reservationService.getStay(this.stayId).subscribe(
+        {
+          next:(data)=>console.log(data),
+          error:(data)=>console.log(data),
+        }
+      )
+    }
   }
   onItemSelect(item: any) {
     console.log(item);
@@ -93,12 +107,22 @@ export class CreateStayComponent implements OnInit{
     this.stay.perks = this.selectedItems.map(item => item.item_text);
     console.log(this.selectedItems);
     console.log(this.stay);
-    this.reservationService.createStay(this.stay).subscribe(
-      {
-        next:(data)=>console.log(data),
-        error:(data)=>console.log(data),
-      }
-    )
+    if(this.stayId == '0'){
+      this.reservationService.createStay(this.stay).subscribe(
+        {
+          next:(data)=>console.log(data),
+          error:(data)=>console.log(data),
+        }
+      )
+    }else{
+      this.reservationService.updateStay(this.stay).subscribe(
+        {
+          next:(data)=>console.log(data),
+          error:(data)=>console.log(data),
+        }
+      )
+    }
+
   }
 
   addRange(){

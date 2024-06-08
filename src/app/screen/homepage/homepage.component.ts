@@ -14,6 +14,8 @@ import {MatIcon} from "@angular/material/icon";
 import {MatButton, MatMiniFabButton} from "@angular/material/button";
 import {NgForOf} from "@angular/common";
 import {StayListTileComponent} from "../../component/stay-list-tile/stay-list-tile.component";
+import {SearchStay} from "../../model/searchStay";
+import {ReservationService} from "../../service/reservation.service";
 
 @Component({
   selector: 'app-homepage',
@@ -42,4 +44,18 @@ import {StayListTileComponent} from "../../component/stay-list-tile/stay-list-ti
 export class HomepageComponent {
   startDate:Date = new Date();
   perks:String[]=['Wi-fi','Parking','Pet friendly'];
+  searchStay:SearchStay=new SearchStay();
+
+  constructor(private reservationService: ReservationService) {
+  }
+
+  search(){
+    this.reservationService.searchStays(this.searchStay).subscribe(
+      {
+        next:(data)=>console.log(data),
+        error:(data)=>console.log(data),
+      }
+    )
+  }
+
 }

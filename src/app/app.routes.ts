@@ -10,7 +10,7 @@ import {HttpClientModule} from "@angular/common/http";
 export const routes: Routes = [
   { path: '', component: LoginRegistrationComponent},
   {path:'edit', component: EditProfileComponent},
-  {path:'create-stay', component: CreateStayComponent},
+  {path:'create-stay/:id', component: CreateStayComponent},
   {path:'home', component: HomepageComponent},
   {path:'my-stays', component: MyStaysComponent}
 ];
