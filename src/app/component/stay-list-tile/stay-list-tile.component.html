@@ -24,7 +24,7 @@
         <p style="margin-top:-10px;margin-right: -30px">Price per day: 80$</p>
         <p *ngIf="!isMyStays" style="margin-top:-10px;margin-right: -30px">Price: <span style="color: red">200$</span></p>
         <button mat-flat-button color="primary" *ngIf="!isMyStays" style="margin-right: -30px">Reserve</button>
-        <button mat-flat-button color="warn" *ngIf="isMyStays" style="margin-right: -30px">Edit</button>
+        <button mat-flat-button color="warn" [routerLink]="['/create-stay','id']" *ngIf="isMyStays" style="margin-right: -30px">Edit</button>
       </div>
     </div>
   </div>
