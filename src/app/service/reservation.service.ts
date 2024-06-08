@@ -58,4 +58,22 @@ export class ReservationService {
     });
   }
 
+  approveReservation(reservationId:String){
+    return this._http.get<any>(`${this.url}/${reservationId}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        //'Access-Control-Allow-Origin': '*',
+      }),
+    });
+  }
+
+  deleteReservation(reservationId:String){
+    return this._http.get<any>(`${this.url}/${reservationId}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        //'Access-Control-Allow-Origin': '*',
+      }),
+    });
+  }
+
 }
