@@ -4,6 +4,7 @@ import {MatCardContent} from "@angular/material/card";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {LoginInfo, User} from "../../model/user";
 import {CommonModule} from "@angular/common";
+import {AuthenticationService} from "../../service/authentication.service";
 
 @Component({
   selector: 'app-login-registration',
@@ -26,12 +27,36 @@ export class LoginRegistrationComponent {
   isRegistered: boolean = false;
   reenterPass: string = '';
 
+  constructor(private authenticationService: AuthenticationService) {
+  }
+
   registerClick() {
     this.showLogin = false;
   }
 
-  loginUser(){}
+  loginUser(){
+    this.authenticationService.loginUser(this.loginInfo).subscribe({
+      next: data => {
+        console.log(data);
+        alert('Successfully logged in');
+        sessionStorage.setItem('username', this.loginData.username);
+        sessionStorage.setItem('role', this.loginData.role);
+        sessionStorage.setItem('accessToken', this.loginData.accessToken);
+        sessionStorage.setItem('expiresIn', this.loginData.expiresIn);
+        },
+      error: error => {console.log(error);},
+    })
+  }
 
-  registerUser(){}
+  registerUser(){
+    console.log(this.user)
+    this.authenticationService.registerUser(this.user).subscribe({
+      next: data => {
+        console.log(data);
+        alert('Successfully registered!');
+      },
+      error: error => {console.log(error);},
+    })
+  }
 
 }
