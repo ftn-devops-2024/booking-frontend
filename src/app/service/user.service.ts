@@ -11,7 +11,7 @@ export class UserService {
 
   constructor(private _http: HttpClient) { }
 
-  url = environment.reservation_service_url;
+  url = environment.authentication_service_url;
 
   getUser(userId:string){
     return this._http.get<any>(`${this.url}/${userId}`, {
