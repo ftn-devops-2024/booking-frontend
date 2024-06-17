@@ -33,7 +33,7 @@ jobs:
           ${{ runner.os }}-node-
 
     - name: Install Puppeteer
-    run: npm install puppeteer --save-dev
+      run: npm install puppeteer --save-dev
 
     - name: Add Puppeteer to Environment Path
       run: export CHROME_BIN=$(node -e "console.log(require('puppeteer').executablePath())")
