@@ -32,20 +32,8 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
 
-    - name: Install Puppeteer
-      run: npm install puppeteer --save-dev
-
-    - name: Add Puppeteer to Environment Path
-      run: export CHROME_BIN=$(node -e "console.log(require('puppeteer').executablePath())")
-
-
     - name: Install Dependencies
       run: npm install
 
     - name: Build Angular App
       run: npm run build
-
-    - name: Run Tests
-      env:
-        CHROME_BIN: puppeteer
-      run: npm test

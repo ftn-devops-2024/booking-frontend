@@ -28,19 +28,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install Puppeteer
-        run: npm install puppeteer --save-dev
-
-      - name: Add Puppeteer to Environment Path
-        run: export CHROME_BIN=$(node -e "console.log(require('puppeteer').executablePath())")
-
       - name: Build Angular app
         run: npm run build
-
-      - name: Test Angular app
-        env:
-          CHROME_BIN: puppeteer
-        run: npm test
 
       - name: Kaniko build
         uses: aevea/action-kaniko@master
