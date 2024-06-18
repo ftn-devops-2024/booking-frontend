@@ -1,6 +1,6 @@
-const host = '192.168.0.15'
+const host = '192.168.0.15';
 
 export const environment = {
   production: false,
-  reservation_service_url: `http://localhost:8080`,
+  reservation_service_url: `http://localhost:9000/accommodations`,
 };

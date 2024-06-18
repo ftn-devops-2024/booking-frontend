@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Stay} from "../model/stay";
-import {environment} from "../../environments/environment";
-import {SearchStay} from "../model/searchStay";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Stay } from '../model/stay';
+import { environment } from '../../environments/environment';
+import { SearchStay } from '../model/searchStay';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ReservationService {
-
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {}
 
   url = environment.reservation_service_url;
 
-  createStay(info:Stay){
-    return this._http.post<any>(`${this.url}/create`,info, {
+  createStay(info: Stay) {
+    return this._http.post<any>(`${this.url}`, info, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         //'Access-Control-Allow-Origin': '*',
@@ -22,7 +21,7 @@ export class ReservationService {
     });
   }
 
-  getStay(id:String){
+  getStay(id: String) {
     return this._http.get<any>(`${this.url}/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -31,8 +30,8 @@ export class ReservationService {
     });
   }
 
-  updateStay(info:Stay){
-    return this._http.post<any>(`${this.url}/update`,info, {
+  updateStay(info: Stay) {
+    return this._http.put<any>(`${this.url}/1`, info, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         //'Access-Control-Allow-Origin': '*',
@@ -40,7 +39,7 @@ export class ReservationService {
     });
   }
 
-  getAllOwnersStays(ownerId:String){
+  getAllOwnersStays(ownerId: String) {
     return this._http.get<any>(`${this.url}/${ownerId}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -49,8 +48,8 @@ export class ReservationService {
     });
   }
 
-  searchStays(search:SearchStay){
-    return this._http.post<any>(`${this.url}/search`,search, {
+  searchStays(search: SearchStay) {
+    return this._http.post<any>(`${this.url}/search`, search, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         //'Access-Control-Allow-Origin': '*',
@@ -58,7 +57,7 @@ export class ReservationService {
     });
   }
 
-  approveReservation(reservationId:String){
+  approveReservation(reservationId: String) {
     return this._http.get<any>(`${this.url}/${reservationId}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -67,7 +66,7 @@ export class ReservationService {
     });
   }
 
-  deleteReservation(reservationId:String){
+  deleteReservation(reservationId: String) {
     return this._http.get<any>(`${this.url}/${reservationId}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -75,5 +74,4 @@ export class ReservationService {
       }),
     });
   }
-
 }
