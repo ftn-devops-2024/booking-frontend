@@ -1,27 +1,25 @@
-import {Component, OnInit} from '@angular/core';
-import {FormsModule} from "@angular/forms";
-import {User} from "../../model/user";
-import {DateRange, SpecialPrices, Stay} from "../../model/stay";
-import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { User } from '../../model/user';
+import { DateRange, SpecialPrices, Stay } from '../../model/stay';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import {MatFormField} from "@angular/material/form-field";
+import { MatFormField } from '@angular/material/form-field';
 import {
   MatDatepicker,
-  MatDatepickerInput, MatDatepickerModule,
+  MatDatepickerInput,
+  MatDatepickerModule,
   MatDatepickerToggle,
-  MatDateRangeInput,
-  MatDateRangePicker
-} from "@angular/material/datepicker";
-import {MatInputModule} from "@angular/material/input";
-import {MatNativeDateModule} from "@angular/material/core";
-import {MatIcon} from "@angular/material/icon";
-import {MatMiniFabButton} from "@angular/material/button";
+} from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatIcon } from '@angular/material/icon';
+import { MatMiniFabButton } from '@angular/material/button';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import {NgForOf, NgIf} from "@angular/common";
-import {ReservationService} from "../../service/reservation.service";
-import {HttpClientModule} from "@angular/common/http";
-import {ActivatedRoute} from "@angular/router";
-
+import { NgForOf, NgIf } from '@angular/common';
+import { ReservationService } from '../../service/reservation.service';
+import { HttpClientModule } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-stay',
@@ -41,30 +39,44 @@ import {ActivatedRoute} from "@angular/router";
     NgMultiSelectDropDownModule,
     NgForOf,
     NgIf,
-    HttpClientModule
+    HttpClientModule,
   ],
   templateUrl: './create-stay.component.html',
-  styleUrl: './create-stay.component.scss'
+  styleUrls: ['./create-stay.component.scss'],
 })
-export class CreateStayComponent implements OnInit{
+export class CreateStayComponent implements OnInit {
   stay: Stay = new Stay();
-  dropdownList:any[] = [];
-  selectedItems:any[] = [];
-  dropdownSettings:IDropdownSettings = {};
-  today:Date = new Date();
-  stayId:string = '';
+  dropdownList: any[] = [];
+  selectedItems: any[] = [];
+  dropdownSettings: IDropdownSettings = {};
+  today: Date = new Date();
+  stayId: string = '';
 
-  constructor(private route: ActivatedRoute,private reservationService: ReservationService) {
-  }
+  perkMap = {
+    'Wi-fi': 'WIFI',
+    Kitchen: 'KITCHEN',
+    'Air condition': 'AIR_CONDITIONING',
+    Parking: 'FREE_PARKING',
+    'Pet friendly': 'PET_FRIENDLY',
+  };
+
+  reversePerkMap = Object.fromEntries(
+    Object.entries(this.perkMap).map(([key, value]) => [value, key])
+  );
+
+  constructor(
+    private route: ActivatedRoute,
+    private reservationService: ReservationService
+  ) {}
 
   ngOnInit() {
     this.stayId = this.route.snapshot.paramMap.get('id') ?? '0';
     this.dropdownList = [
-      { item_id: 1, item_text: 'Parking' },
-      { item_id: 2, item_text: 'Wi-fi' },
-      { item_id: 3, item_text: 'Kitchen' },
-      { item_id: 4, item_text: 'Air condition' },
-      { item_id: 5, item_text: 'Pet friendly' }
+      { item_id: 1, item_text: 'Wi-fi' },
+      { item_id: 2, item_text: 'Kitchen' },
+      { item_id: 3, item_text: 'Air condition' },
+      { item_id: 4, item_text: 'Parking' },
+      { item_id: 5, item_text: 'Pet friendly' },
     ];
     this.dropdownSettings = {
       singleSelection: false,
@@ -73,72 +85,76 @@ export class CreateStayComponent implements OnInit{
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       itemsShowLimit: 3,
-      allowSearchFilter: true
+      allowSearchFilter: true,
     };
-    if(this.stayId == '0'){ //nova
-      this.stay.availabilityPeriods.push(new DateRange())
-      this.stay.specialPrices.push(new SpecialPrices())
-    }else{
-      //nadji u bazi i promeni stay
-      this.selectedItems = ['Wi-fi'];
-      this.reservationService.getStay(this.stayId).subscribe(
-        {
-          next:(data)=>console.log(data),
-          error:(data)=>console.log(data),
-        }
-      )
+    if (this.stayId == '0') {
+      // New stay
+      this.stay.availabilityPeriods.push(new DateRange());
+      this.stay.specialPrices.push(new SpecialPrices());
+    } else {
+      // Fetch stay details from the database
+      this.reservationService.getStay(this.stayId).subscribe({
+        next: (data) => {
+          this.stay = data;
+          this.selectedItems = this.stay.perks.map((perk) => ({
+            item_id: this.dropdownList.find(
+              (item) => item.item_text === this.reversePerkMap[perk]
+            )?.item_id,
+            item_text: this.reversePerkMap[perk],
+          }));
+        },
+        error: (error) => console.log(error),
+      });
     }
   }
+
   onItemSelect(item: any) {
     console.log(item);
   }
+
   onSelectAll(items: any) {
     console.log(items);
   }
 
   onFileSelected(event: any) {
-    for(let f of event.target.files){
+    for (let f of event.target.files) {
       console.log(f.name);
       this.stay.photos.push(f.name);
     }
   }
 
-  save(){
-    this.stay.perks = this.selectedItems.map(item => item.item_text);
+  save() {
+    this.stay.perks = this.selectedItems.map(
+      (item) => this.perkMap[item.item_text as keyof typeof this.perkMap]
+    );
     console.log(this.selectedItems);
     console.log(this.stay);
-    if(this.stayId == '0'){
-      this.reservationService.createStay(this.stay).subscribe(
-        {
-          next:(data)=>console.log(data),
-          error:(data)=>console.log(data),
-        }
-      )
-    }else{
-      this.reservationService.updateStay(this.stay).subscribe(
-        {
-          next:(data)=>console.log(data),
-          error:(data)=>console.log(data),
-        }
-      )
+    if (this.stayId == '0') {
+      this.reservationService.createStay(this.stay).subscribe({
+        next: (data) => console.log(data),
+        error: (error) => console.log(error),
+      });
+    } else {
+      this.reservationService.updateStay(this.stay).subscribe({
+        next: (data) => console.log(data),
+        error: (error) => console.log(error),
+      });
     }
-
   }
 
-  addRange(){
-    this.stay.availabilityPeriods.push(new DateRange())
+  addRange() {
+    this.stay.availabilityPeriods.push(new DateRange());
   }
 
-  removeRange(index:number){
-    this.stay.availabilityPeriods.splice(index,1);
+  removeRange(index: number) {
+    this.stay.availabilityPeriods.splice(index, 1);
   }
 
-  addSpecialPrice(){
-    this.stay.specialPrices.push(new SpecialPrices())
+  addSpecialPrice() {
+    this.stay.specialPrices.push(new SpecialPrices());
   }
 
-  removeSpecialPrices(index:number){
-    this.stay.specialPrices.splice(index,1);
+  removeSpecialPrices(index: number) {
+    this.stay.specialPrices.splice(index, 1);
   }
-
 }
