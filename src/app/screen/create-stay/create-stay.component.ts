@@ -20,6 +20,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { ReservationService } from '../../service/reservation.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-stay',
@@ -66,7 +67,8 @@ export class CreateStayComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private reservationService: ReservationService
+    private reservationService: ReservationService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -132,12 +134,18 @@ export class CreateStayComponent implements OnInit {
     console.log(this.stay);
     if (this.stayId == '0') {
       this.reservationService.createStay(this.stay).subscribe({
-        next: (data) => console.log(data),
+        next: (data) => {
+          console.log(data);
+          this.toastr.success('Success!', 'Successfully created!');
+        },
         error: (error) => console.log(error),
       });
     } else {
       this.reservationService.updateStay(this.stay, this.stayId).subscribe({
-        next: (data) => console.log(data),
+        next: (data) => {
+          console.log(data);
+          this.toastr.success('Success!', 'Successfully updated!');
+        },
         error: (error) => console.log(error),
       });
     }
