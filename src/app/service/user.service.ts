@@ -14,20 +14,10 @@ export class UserService {
   url = environment.authentication_service_url;
 
   getUser(userId:string){
-    return this._http.get<any>(`${this.url}/${userId}`, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        //'Access-Control-Allow-Origin': '*',
-      }),
-    });
+    return this._http.get<any>(`${this.url}/${userId}`);
   }
 
   editUser(info:User){
-    return this._http.post<any>(`${this.url}/`,info, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        //'Access-Control-Allow-Origin': '*',
-      }),
-    });
+    return this._http.post<any>(`${this.url}/`,info);
   }
 }

@@ -1,0 +1,32 @@
+<div class="p-5 vh-100 hero-main">
+
+  <div class="row">
+    <div class="container shadow-lg px-4 py-3 col-9 rounded-4 bg-light">
+      <div class="row">
+        <h1 class="pb-3 col-10" style="font-size: 35px" >Stay Review</h1>
+      </div>
+
+      <div>
+        <div class="row pt-3 px-2">
+
+          <div class="col-6 pb-3">
+            <select class="form-select" aria-label="Default select example">
+              <option value="guest" selected>Super kul vikendica</option>
+              <option value="host">Kul vikendica</option>
+            </select>
+          </div>
+
+          <div class="col-6 pb-3">
+            <input type="number" class="form-control" placeholder="Grade" [(ngModel)]="stayReview.rating" >
+          </div>
+
+          <div class="pt-3 pb-2"></div>
+          <div class="col-5">
+            <button class="btn btn-dark" type="submit" (click)="rateStay()">Rate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
