@@ -15,7 +15,7 @@
         <div *ngIf="showLogin" class="login-show show-log-panel">
           <h2>LOGIN</h2>
           <div>
-            <input type="text" class="form-control" placeholder="Email" [(ngModel)]="loginInfo.email">
+            <input type="text" class="form-control" placeholder="Email" [(ngModel)]="loginInfo.mail">
             <input type="password" class="form-control" placeholder="Password" [(ngModel)]="loginInfo.password">
             <button type="button" class="btn btn-dark" (click)="loginUser()">Login</button>
           </div>
@@ -30,13 +30,17 @@
 
             <div *ngIf="!isRegistered">
 
-              <div class="row pt-3 px-2">
+              <div class="row  px-2">
 
                 <input type="text" class="form-control" placeholder="First name" [(ngModel)]="user.name">
                 <input type="text" class="form-control" placeholder="Last name" [(ngModel)]="user.surname">
-                <input type="text" class="form-control" email placeholder="Email" [(ngModel)]="user.email">
+                <input type="text" class="form-control" email placeholder="Email" [(ngModel)]="user.mail">
                 <input type="text" class="form-control" placeholder="Address" [(ngModel)]="user.address">
                 <input type="password" class="form-control" placeholder="Password" [(ngModel)]="user.password">
+                <select class="form-select" aria-label="Default select example" [(ngModel)]="user.role">
+                  <option value="guest" selected>Guest</option>
+                  <option value="host">Host</option>
+                </select>
                 <div class="pt-2"></div>
               </div>
 
