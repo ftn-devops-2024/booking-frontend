@@ -12,32 +12,31 @@ export class ReservationService {
 
   url = environment.reservation_service_url;
 
-
-  createStay(info:Stay){
-    return this._http.post<any>(`${this.url}/create`,info);
+  createStay(info: Stay) {
+    return this._http.post<any>(`${this.url}accommodations`, info);
   }
 
-  getStay(id:String){
-    return this._http.get<any>(`${this.url}/${id}`);
+  getStay(id: String) {
+    return this._http.get<any>(`${this.url}accommodations/${id}`);
   }
 
-  updateStay(info:Stay){
-    return this._http.post<any>(`${this.url}/update`,info);
+  updateStay(info: Stay, id: String) {
+    return this._http.put<any>(`${this.url}accommodations/${id}`, info);
   }
 
-  getAllOwnersStays(ownerId:String){
-    return this._http.get<any>(`${this.url}/${ownerId}`);
+  getAllOwnersStays(ownerId: String) {
+    return this._http.get<any>(`${this.url}${ownerId}`);
   }
 
-  searchStays(search:SearchStay){
-    return this._http.post<any>(`${this.url}/search`,search);
+  searchStays(search: SearchStay) {
+    return this._http.post<any>(`${this.url}search`, search);
   }
 
-  approveReservation(reservationId:String){
-    return this._http.get<any>(`${this.url}/${reservationId}`);
+  approveReservation(reservationId: String) {
+    return this._http.get<any>(`${this.url}${reservationId}`);
   }
 
-  deleteReservation(reservationId:String){
-    return this._http.get<any>(`${this.url}/${reservationId}`);
+  deleteReservation(reservationId: String) {
+    return this._http.get<any>(`${this.url}${reservationId}`);
   }
 }

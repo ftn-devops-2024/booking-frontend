@@ -135,7 +135,7 @@ export class CreateStayComponent implements OnInit {
         error: (error) => console.log(error),
       });
     } else {
-      this.reservationService.updateStay(this.stay).subscribe({
+      this.reservationService.updateStay(this.stay, this.stayId).subscribe({
         next: (data) => console.log(data),
         error: (error) => console.log(error),
       });
