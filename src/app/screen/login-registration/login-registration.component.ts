@@ -38,10 +38,12 @@ export class LoginRegistrationComponent {
     this.authenticationService.loginUser(this.loginInfo).subscribe({
       next: data => {
         console.log(data);
+        this.loginData = data;
         alert('Successfully logged in');
         sessionStorage.setItem('username', this.loginData.username);
+        sessionStorage.setItem('id', this.loginData.id);
         sessionStorage.setItem('role', this.loginData.role);
-        sessionStorage.setItem('accessToken', this.loginData.accessToken);
+        sessionStorage.setItem('accessToken', this.loginData.token);
         sessionStorage.setItem('expiresIn', this.loginData.expiresIn);
         },
       error: error => {console.log(error);},
