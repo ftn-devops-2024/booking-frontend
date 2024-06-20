@@ -39,4 +39,8 @@ export class ReservationService {
   deleteReservation(reservationId: String) {
     return this._http.get<any>(`${this.url}${reservationId}`);
   }
+
+  getAllReservations(userId: String) {
+    return this._http.get<any>(`${this.url}/${userId}`);
+  }
 }

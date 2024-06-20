@@ -6,11 +6,9 @@
       <div>
         <div class="row px-2">
           <div class="py-3 list-group">
-            <app-reservation-list-tile [id]="'1'" class="pt-3 row list-group-item"></app-reservation-list-tile>
-            <app-reservation-list-tile [id]="'2'" class="pt-3 row list-group-item"></app-reservation-list-tile>
-            <app-reservation-list-tile [id]="'3'" class="pt-3 row list-group-item"></app-reservation-list-tile>
-            <app-reservation-list-tile [id]="'4'" class="pt-3 row list-group-item"></app-reservation-list-tile>
-            <app-reservation-list-tile [id]="'5'" class="pt-3  row list-group-item"></app-reservation-list-tile>
+            <div *ngFor="let res of reservations">
+              <app-reservation-list-tile [reservation]="res" class="pt-3 row list-group-item"></app-reservation-list-tile>
+            </div>
           </div>
 
         </div>

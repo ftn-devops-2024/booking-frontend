@@ -16,6 +16,7 @@ import {NgForOf} from "@angular/common";
 import {StayListTileComponent} from "../../component/stay-list-tile/stay-list-tile.component";
 import {SearchStay} from "../../model/searchStay";
 import {ReservationService} from "../../service/reservation.service";
+import {Stay} from "../../model/stay";
 
 @Component({
   selector: 'app-homepage',
@@ -45,14 +46,31 @@ export class HomepageComponent {
   startDate:Date = new Date();
   perks:String[]=['Wi-fi','Parking','Pet friendly'];
   searchStay:SearchStay=new SearchStay();
+  foundStays: Stay[] = [new Stay(1,'12','Superkul','Srbija',['Wi-fi','Pet friendly'],[],2,10,30,[],true,[])];
+  days:number = 1;
 
-  constructor(private reservationService: ReservationService) {
-  }
+  constructor(private reservationService: ReservationService) {}
 
   search(){
+    console.log(this.searchStay);
+    if(this.searchStay.startDate == null || this.searchStay.endDate == null){
+      alert('Please choose dates!');
+      return;
+    }
+    if(this.searchStay.location == ''){
+      alert('Please choose location!');
+      return;
+    }
+    const differenceInTime = this.searchStay.endDate.getTime() - this.searchStay.startDate.getTime();
+    const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+    const day = Math.abs(differenceInDays);
+    this.days = Math.round(day);
     this.reservationService.searchStays(this.searchStay).subscribe(
       {
-        next:(data)=>console.log(data),
+        next:(data)=> {
+          console.log(data);
+          this.foundStays = data;
+        },
         error:(data)=>console.log(data),
       }
     )

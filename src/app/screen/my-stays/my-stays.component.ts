@@ -13,6 +13,7 @@ import {MatMiniFabButton} from "@angular/material/button";
 import {StayListTileComponent} from "../../component/stay-list-tile/stay-list-tile.component";
 import {ReservationService} from "../../service/reservation.service";
 import {Stay} from "../../model/stay";
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-my-stays',
@@ -29,20 +30,24 @@ import {Stay} from "../../model/stay";
     MatMiniFabButton,
     MatStartDate,
     MatSuffix,
-    StayListTileComponent
+    StayListTileComponent,
+    NgForOf
   ],
   templateUrl: './my-stays.component.html',
   styleUrl: './my-stays.component.scss'
 })
 export class MyStaysComponent implements OnInit {
-  myStays:Stay[] = [];
+  myStays:Stay[] = [new Stay(1,'12','Superkul','Srbija',['Wi-fi','Pet friendly'],[],2,10,30,[],true,[])];
 
   constructor(private reservationService: ReservationService) {}
 
   ngOnInit(): void {
     this.reservationService.getAllOwnersStays('123').subscribe(
       {
-        next:(data)=>console.log(data),
+        next:(data)=> {
+          console.log(data);
+          this.myStays = data;
+        },
         error:(data)=>console.log(data),
       }
     )

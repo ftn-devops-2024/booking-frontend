@@ -5,7 +5,7 @@
   <div class="col-9">
     <div class="row">
       <div class="col-5">
-        <h2>Super kul vikendica</h2>
+        <h2>{{stay?.name}}</h2>
       </div>
       <div class="col-5"></div>
       <div *ngIf="!isMyStays" class="col-2">
@@ -14,17 +14,17 @@
     </div>
     <div class="row">
       <div class="col-4">
-        <p *ngFor="let p of perks" style="margin-top:-10px;">● {{ p }}</p>
+        <p *ngFor="let p of stay?.perks" style="margin-top:-10px;">● {{ p }}</p>
       </div>
       <div class="col-4">
-        <p style="margin-top:-10px;">Min guests: 2</p>
-        <p style="margin-top:-10px;">Max guests: 10</p>
+        <p style="margin-top:-10px;">Min guests: {{stay?.minGuests}}</p>
+        <p style="margin-top:-10px;">Max guests: {{stay?.maxGuests}}</p>
       </div>
       <div class="col-4 text-end">
-        <p style="margin-top:-10px;margin-right: -30px">Price per day: 80$</p>
-        <p *ngIf="!isMyStays" style="margin-top:-10px;margin-right: -30px">Price: <span style="color: red">200$</span></p>
+        <p style="margin-top:-10px;margin-right: -30px">Price per day: {{stay?.pricePerDay}}$</p>
+        <p *ngIf="!isMyStays" style="margin-top:-10px;margin-right: -30px">Price: <span style="color: red">{{(stay?.pricePerDay ?? 1)*(days ?? 1)}}$</span></p>
         <button mat-flat-button color="primary" *ngIf="!isMyStays" style="margin-right: -30px">Reserve</button>
-        <button mat-flat-button color="warn" [routerLink]="['/create-stay','id']" *ngIf="isMyStays" style="margin-right: -30px">Edit</button>
+        <button mat-flat-button color="warn" [routerLink]="['/create-stay',stay?.id]" *ngIf="isMyStays" style="margin-right: -30px">Edit</button>
       </div>
     </div>
   </div>

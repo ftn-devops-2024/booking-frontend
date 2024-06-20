@@ -39,12 +39,10 @@
               </button>
             </div>
           </div>
-          <div class="pt-3 list-group">
-              <app-stay-list-tile class="pt-3 row list-group-item"></app-stay-list-tile>
-            <app-stay-list-tile class="pt-3 row list-group-item"></app-stay-list-tile>
-            <app-stay-list-tile class="pt-3 row list-group-item"></app-stay-list-tile>
-            <app-stay-list-tile class="pt-3 row list-group-item"></app-stay-list-tile>
-            <app-stay-list-tile class="pt-3 row list-group-item"></app-stay-list-tile>
+          <div class="pt-3 list-group" >
+            <div *ngFor="let stay of this.foundStays">
+              <app-stay-list-tile [stay]="stay" [days]="days" class="pt-3 row list-group-item"></app-stay-list-tile>
+            </div>
           </div>
 
         </div>
