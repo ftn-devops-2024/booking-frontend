@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {NgForOf, NgIf} from "@angular/common";
 import {RouterLink} from "@angular/router";
+import {Stay} from "../../model/stay";
 
 @Component({
   selector: 'app-stay-list-tile',
@@ -17,6 +18,7 @@ import {RouterLink} from "@angular/router";
 })
 export class StayListTileComponent {
   @Input() isMyStays:boolean|undefined;
-  perks:String[]=['Wi-fi','Parking','Pet friendly'];
+  @Input() stay:Stay|undefined;
+  @Input() days:number|undefined;
 
 }

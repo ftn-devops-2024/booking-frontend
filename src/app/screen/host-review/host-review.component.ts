@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HostReview} from "../../model/review";
 import {ReviewService} from "../../service/review.service";
+import {User} from "../../model/user";
 
 @Component({
   selector: 'app-host-review',
@@ -15,12 +16,21 @@ import {ReviewService} from "../../service/review.service";
 })
 export class HostReviewComponent implements OnInit{
   hostReview: HostReview = new HostReview();
+  hosts:User[] = [];
 
   constructor(private reviewService:ReviewService) {
   }
 
   ngOnInit(): void {
     //dobavi sve hostove kod kojih je user bio
+    let userId = sessionStorage.getItem("id");
+    this.reviewService.getHosts(userId ?? '1').subscribe({
+      next: data => {
+        console.log(data);
+        this.hosts = data;
+      },
+      error: error => {console.log(error);},
+    })
   }
 
   rateHost(){

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HostReview, StayReview} from "../../model/review";
 import {ReviewService} from "../../service/review.service";
+import {Stay} from "../../model/stay";
 
 @Component({
   selector: 'app-stay-review',
@@ -13,14 +14,22 @@ import {ReviewService} from "../../service/review.service";
   templateUrl: './stay-review.component.html',
   styleUrl: './stay-review.component.scss'
 })
-export class StayReviewComponent {
+export class StayReviewComponent implements OnInit{
   stayReview: StayReview = new StayReview();
+  stays: Stay[] = [];
 
-  constructor(private reviewService: ReviewService) {
-  }
+  constructor(private reviewService: ReviewService) {}
 
   ngOnInit(): void {
     //dobavi sve smestaje kod kojih je user bio
+    let userId = sessionStorage.getItem("id");
+    this.reviewService.getStays(userId ?? '1').subscribe({
+      next: data => {
+        console.log(data);
+        this.stays = data;
+        },
+      error: error => {console.log(error);},
+    })
   }
 
   rateStay(){

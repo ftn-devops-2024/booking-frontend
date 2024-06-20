@@ -1,5 +1,6 @@
 export class Stay {
   constructor(
+    public id: number = 1,
     public ownerId: string = '123',
     public name: string = '',
     public location: string = '',

@@ -21,4 +21,12 @@ export class ReviewService {
     return this._http.post<any>(`${this.url}/accommodation`,info);
   }
 
+  getStays(userId:string){
+    return this._http.get<any>(`${this.url}/`+userId);
+  }
+
+  getHosts(userId:string){
+    return this._http.get<any>(`${this.url}/`+userId);
+  }
+
 }

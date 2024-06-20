@@ -71,6 +71,7 @@ export class CreateStayComponent implements OnInit {
 
   ngOnInit() {
     this.stayId = this.route.snapshot.paramMap.get('id') ?? '0';
+    console.log(this.stayId)
     this.dropdownList = [
       { item_id: 1, item_text: 'Wi-fi' },
       { item_id: 2, item_text: 'Kitchen' },
