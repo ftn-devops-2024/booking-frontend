@@ -25,22 +25,24 @@ export class ReservationService {
   }
 
   getAllOwnersStays(ownerId: String) {
-    return this._http.get<any>(`${this.url}${ownerId}`);
+    return this._http.get<any>(`${this.url}accommodations/owner/${ownerId}`);
   }
 
   searchStays(search: SearchStay) {
-    return this._http.post<any>(`${this.url}search`, search);
+    return this._http.post<any>(`${this.url}accommodations/search`, search);
   }
 
   approveReservation(reservationId: String) {
-    return this._http.get<any>(`${this.url}${reservationId}`);
+    return this._http.get<any>(
+      `${this.url}reservations/${reservationId}/confirm`
+    );
   }
 
   deleteReservation(reservationId: String) {
-    return this._http.get<any>(`${this.url}${reservationId}`);
+    return this._http.get<any>(`${this.url}reservations/${reservationId}`);
   }
 
   getAllReservations(userId: String) {
-    return this._http.get<any>(`${this.url}/${userId}`);
+    return this._http.get<any>(`${this.url}reservations/user/${userId}`);
   }
 }
