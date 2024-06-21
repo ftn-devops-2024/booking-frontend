@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { User } from '../../model/user';
-import { ReservationService } from '../../service/reservation.service';
 import { UserService } from '../../service/user.service';
+import { ToastrService } from 'ngx-toastr';
+import { WebsocketService } from '../../service/websocket.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -15,7 +16,11 @@ export class EditProfileComponent implements OnInit {
   user: User = new User();
   id: string | null = sessionStorage.getItem('id');
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private toastr: ToastrService,
+    private webSocketService: WebsocketService
+  ) {}
 
   ngOnInit() {
     //dobavi korisnika ili ga vec imamo
@@ -34,7 +39,10 @@ export class EditProfileComponent implements OnInit {
 
   editUser() {
     this.userService.editUser(this.user).subscribe({
-      next: (data) => console.log(data),
+      next: (data) => {
+        this.toastr.success('Success!', 'Successfully edited!');
+        console.log(data);
+      },
       error: (error) => {
         console.log(error);
       },
