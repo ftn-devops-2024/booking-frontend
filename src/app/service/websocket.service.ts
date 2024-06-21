@@ -50,51 +50,54 @@ export class WebsocketService {
     this.reservationStompClient.connect({}, function () {
       if (that.role != null) {
         if (that.role == 'ROLE_HOST') that.openReservationSocket();
-        else that.openGuestSocket();
+        else if (that.role == 'ROLE_GUEST' && that.user.hostResponse)
+          that.openGuestSocket();
       }
     });
   }
 
   openReservationSocket() {
-    this.reservationStompClient.subscribe(
-      '/notification/reservation-created',
-      (message: { body: any }) => {
-        let r: ReservationDto = JSON.parse(message.body);
-        this.reservationService
-          .getStay(r.accommodationId.toString())
-          .subscribe({
-            next: (data) => {
-              let stay: Stay = data;
-              if (stay.ownerId == this.id)
-                this.toast.success(
-                  'A new reservation has been made.',
-                  'New reservation'
-                );
-            },
-            error: (error) => console.log(error),
-          });
-      }
-    );
+    if (this.user.reservationRequest)
+      this.reservationStompClient.subscribe(
+        '/notification/reservation-created',
+        (message: { body: any }) => {
+          let r: ReservationDto = JSON.parse(message.body);
+          this.reservationService
+            .getStay(r.accommodationId.toString())
+            .subscribe({
+              next: (data) => {
+                let stay: Stay = data;
+                if (stay.ownerId == this.id)
+                  this.toast.success(
+                    'A new reservation has been made.',
+                    'New reservation'
+                  );
+              },
+              error: (error) => console.log(error),
+            });
+        }
+      );
 
-    this.reservationStompClient.subscribe(
-      '/notification/reservation-cancelled',
-      (message: { body: any }) => {
-        let r: ReservationDto = JSON.parse(message.body);
-        this.reservationService
-          .getStay(r.accommodationId.toString())
-          .subscribe({
-            next: (data) => {
-              let stay: Stay = data;
-              if (stay.ownerId == this.id)
-                this.toast.success(
-                  'Reservation has been canceled.',
-                  'Reservation canceled'
-                );
-            },
-            error: (error) => console.log(error),
-          });
-      }
-    );
+    if (this.user.reservationCanceled)
+      this.reservationStompClient.subscribe(
+        '/notification/reservation-cancelled',
+        (message: { body: any }) => {
+          let r: ReservationDto = JSON.parse(message.body);
+          this.reservationService
+            .getStay(r.accommodationId.toString())
+            .subscribe({
+              next: (data) => {
+                let stay: Stay = data;
+                if (stay.ownerId == this.id)
+                  this.toast.success(
+                    'Reservation has been canceled.',
+                    'Reservation canceled'
+                  );
+              },
+              error: (error) => console.log(error),
+            });
+        }
+      );
   }
 
   openGuestSocket() {
@@ -134,35 +137,37 @@ export class WebsocketService {
   }
 
   openReviewSocket() {
-    this.reviewStompClient.subscribe(
-      '/notification/accommodation-review',
-      (message: { body: any }) => {
-        let r: StayReview = JSON.parse(message.body);
-        this.reservationService.getStay(r.accommodationId).subscribe({
-          next: (data) => {
-            let stay: Stay = data;
-            if (stay.ownerId == this.id)
-              this.toast.success(
-                'A client has left a review for your accommodation - ' +
-                  r.rating,
-                'Accommodation review'
-              );
-          },
-          error: (error) => console.log(error),
-        });
-      }
-    );
+    if (this.user.accommodationReview)
+      this.reviewStompClient.subscribe(
+        '/notification/accommodation-review',
+        (message: { body: any }) => {
+          let r: StayReview = JSON.parse(message.body);
+          this.reservationService.getStay(r.accommodationId).subscribe({
+            next: (data) => {
+              let stay: Stay = data;
+              if (stay.ownerId == this.id)
+                this.toast.success(
+                  'A client has left a review for your accommodation - ' +
+                    r.rating,
+                  'Accommodation review'
+                );
+            },
+            error: (error) => console.log(error),
+          });
+        }
+      );
 
-    this.reviewStompClient.subscribe(
-      '/notification/host-review',
-      (message: { body: any }) => {
-        let r: HostReview = JSON.parse(message.body);
-        if (r.hostId == this.id)
-          this.toast.success(
-            'A client has left a review for you - ' + r.rating,
-            'Host review'
-          );
-      }
-    );
+    if (this.user.hostReview)
+      this.reviewStompClient.subscribe(
+        '/notification/host-review',
+        (message: { body: any }) => {
+          let r: HostReview = JSON.parse(message.body);
+          if (r.hostId == this.id)
+            this.toast.success(
+              'A client has left a review for you - ' + r.rating,
+              'Host review'
+            );
+        }
+      );
   }
 }
