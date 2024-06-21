@@ -109,6 +109,18 @@ export class WebsocketService {
           );
       }
     );
+
+    this.reservationStompClient.subscribe(
+      '/notification/reservation-rejected',
+      (message: { body: any }) => {
+        let r: ReservationDto = JSON.parse(message.body);
+        if (this.id && r.guestId == this.id)
+          this.toast.error(
+            'The host has rejected your reservation.',
+            'Reservation rejected'
+          );
+      }
+    );
   }
 
   initializeReviewWebSocketConnection() {
