@@ -65,7 +65,8 @@ export class MyStaysComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.reservationService.getAllOwnersStays('123').subscribe({
+    const userId = sessionStorage.getItem('id');
+    this.reservationService.getAllOwnersStays(userId ?? '1').subscribe({
       next: (data) => {
         console.log(data);
         this.myStays = data;

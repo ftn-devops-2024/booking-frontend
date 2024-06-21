@@ -1,7 +1,7 @@
 export class Stay {
   constructor(
     public id: number = 1,
-    public ownerId: string = '123',
+    public ownerId: string = '',
     public name: string = '',
     public location: string = '',
     public perks: string[] = [],
