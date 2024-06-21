@@ -48,4 +48,9 @@ export class EditProfileComponent implements OnInit {
       },
     });
   }
+
+  deleteUser(){
+    this.user.deleted = true;
+    this.editUser();
+  }
 }

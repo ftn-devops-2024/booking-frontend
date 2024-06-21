@@ -7,26 +7,29 @@
     <div class="navbar-nav">
       <a class="nav-item nav-link active" href="/home">Home</a>
     </div>
-    <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="/edit">Edit profile</a>
+    <div class="navbar-nav" *ngIf="role == 'ROLE_GUEST' || role == 'ROLE_HOST'">
+      <a class="nav-item nav-link active" href="/edit" >Edit profile</a>
     </div>
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="/create-stay/0">Create stay</a>
+      <a class="nav-item nav-link active" href="/create-stay/0" *ngIf="role == 'ROLE_HOST'">Create stay</a>
     </div>
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="/my-stays">My stays</a>
+      <a class="nav-item nav-link active" href="/my-stays" *ngIf="role == 'ROLE_HOST'">My stays</a>
     </div>
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="/approve">Reservations</a>
+      <a class="nav-item nav-link active" href="/approve" *ngIf="role == 'ROLE_HOST'">Reservations</a>
     </div>
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="/reservations">My Reservations</a>
+      <a class="nav-item nav-link active" href="/reservations" *ngIf="role == 'ROLE_GUEST'">My Reservations</a>
     </div>
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="/host-review">Host Review</a>
+      <a class="nav-item nav-link active" href="/host-review" *ngIf="role == 'ROLE_GUEST'">Host Review</a>
     </div>
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="/stay-review">Stay Review</a>
+      <a class="nav-item nav-link active" href="/stay-review" *ngIf="role == 'ROLE_GUEST'">Stay Review</a>
+    </div>
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="/notifications" *ngIf="role == 'ROLE_GUEST' || role == 'ROLE_HOST'">Notifications</a>
     </div>
   </div>
   <a class="navbar-text nav-link mx-3" href="/" >

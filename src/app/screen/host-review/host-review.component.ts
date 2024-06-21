@@ -4,11 +4,16 @@ import { HostReview } from '../../model/review';
 import { ReviewService } from '../../service/review.service';
 import { User } from '../../model/user';
 import { WebsocketService } from '../../service/websocket.service';
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-host-review',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    NgForOf
+  ],
   templateUrl: './host-review.component.html',
   styleUrl: './host-review.component.scss',
 })
@@ -48,4 +53,14 @@ export class HostReviewComponent implements OnInit {
       },
     });
   }
+
+  gradeChange(event: Event){
+    console.log(event);
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedValue = selectElement.value;
+    console.log(selectedValue);
+    this.hostReview.rating =  Number(selectedValue);
+  }
+
+
 }

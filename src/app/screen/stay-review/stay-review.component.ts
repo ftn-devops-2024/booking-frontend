@@ -4,11 +4,16 @@ import { HostReview, StayReview } from '../../model/review';
 import { ReviewService } from '../../service/review.service';
 import { Stay } from '../../model/stay';
 import { WebsocketService } from '../../service/websocket.service';
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-stay-review',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    NgForOf
+  ],
   templateUrl: './stay-review.component.html',
   styleUrl: './stay-review.component.scss',
 })
@@ -45,4 +50,13 @@ export class StayReviewComponent implements OnInit {
       },
     });
   }
+
+  gradeChange(event: Event){
+    console.log(event);
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedValue = selectElement.value;
+    console.log(selectedValue);
+    this.stayReview.rating = Number(selectedValue);
+  }
+
 }
