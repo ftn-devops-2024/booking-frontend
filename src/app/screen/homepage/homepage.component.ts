@@ -18,6 +18,7 @@ import { SearchStay } from '../../model/searchStay';
 import { ReservationService } from '../../service/reservation.service';
 import { Stay } from '../../model/stay';
 import { ToastrService } from 'ngx-toastr';
+import { WebsocketService } from '../../service/websocket.service';
 
 @Component({
   selector: 'app-homepage',
@@ -66,7 +67,8 @@ export class HomepageComponent {
 
   constructor(
     private reservationService: ReservationService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private webSocketService: WebsocketService
   ) {}
 
   showSuccess() {

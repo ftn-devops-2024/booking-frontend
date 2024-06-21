@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { User } from '../../model/user';
 import { DateRange, SpecialPrices, Stay } from '../../model/stay';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import {
+  NgMultiSelectDropDownModule,
+  IDropdownSettings,
+} from 'ng-multiselect-dropdown';
 import { MatFormField } from '@angular/material/form-field';
 import {
   MatDatepicker,
@@ -21,6 +22,7 @@ import { ReservationService } from '../../service/reservation.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { WebsocketService } from '../../service/websocket.service';
 
 @Component({
   selector: 'app-create-stay',
@@ -68,12 +70,13 @@ export class CreateStayComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private reservationService: ReservationService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private webSocketService: WebsocketService
   ) {}
 
   ngOnInit() {
     this.stayId = this.route.snapshot.paramMap.get('id') ?? '0';
-    console.log(this.stayId)
+    console.log(this.stayId);
     this.dropdownList = [
       { item_id: 1, item_text: 'Wi-fi' },
       { item_id: 2, item_text: 'Kitchen' },

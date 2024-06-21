@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { User } from '../../model/user';
 import { UserService } from '../../service/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { WebsocketService } from '../../service/websocket.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -17,7 +18,8 @@ export class EditProfileComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private webSocketService: WebsocketService
   ) {}
 
   ngOnInit() {
