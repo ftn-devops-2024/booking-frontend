@@ -3,13 +3,15 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HostReview, StayReview} from "../../model/review";
 import {ReviewService} from "../../service/review.service";
 import {Stay} from "../../model/stay";
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-stay-review',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgForOf
   ],
   templateUrl: './stay-review.component.html',
   styleUrl: './stay-review.component.scss'
@@ -37,5 +39,13 @@ export class StayReviewComponent implements OnInit{
       next: data => {console.log(data);},
       error: error => {console.log(error);},
     })
+  }
+
+  gradeChange(event: Event){
+    console.log(event);
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedValue = selectElement.value;
+    console.log(selectedValue);
+    this.stayReview.rating = Number(selectedValue);
   }
 }

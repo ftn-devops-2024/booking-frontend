@@ -10,6 +10,7 @@ import {ReservationApproveComponent} from "./screen/reservation-approve/reservat
 import {MyReservationsComponent} from "./screen/my-reservations/my-reservations.component";
 import {HostReviewComponent} from "./screen/host-review/host-review.component";
 import {StayReviewComponent} from "./screen/stay-review/stay-review.component";
+import {EnableNotificationsComponent} from "./screen/enable-notifications/enable-notifications.component";
 
 export const routes: Routes = [
   { path: '', component: LoginRegistrationComponent},
@@ -20,7 +21,8 @@ export const routes: Routes = [
   {path:'approve', component: ReservationApproveComponent},
   {path:'reservations', component: MyReservationsComponent},
   {path:'host-review', component: HostReviewComponent},
-  {path:'stay-review', component: StayReviewComponent}
+  {path:'stay-review', component: StayReviewComponent},
+  {path:'notifications', component: EnableNotificationsComponent}
 ];
 
 @NgModule({
