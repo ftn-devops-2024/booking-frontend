@@ -47,7 +47,7 @@ export class HomepageComponent {
   startDate: Date = new Date();
   perks: String[] = ['Wi-fi', 'Parking', 'Pet friendly'];
   searchStay: SearchStay = new SearchStay();
-  foundStays: Stay[] = [];
+  foundStays: Stay[] = [new Stay()];
   days: number = 1;
 
   constructor(

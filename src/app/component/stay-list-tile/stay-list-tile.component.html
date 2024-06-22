@@ -7,9 +7,14 @@
       <div class="col-5">
         <h2>{{stay?.name}}</h2>
       </div>
-      <div class="col-5"></div>
-      <div *ngIf="!isMyStays" class="col-2">
-        <p>Grade: <b>9.3</b></p>
+      <div class="col-4"></div>
+      <div *ngIf="!isMyStays" class="col-3 text-end">
+        <div class="pb-2">
+          <a href="/stay-reviews/{{stay?.id}}">Grade: <b>9.3</b></a>
+        </div>
+        <div class="pb-3">
+          <a href="/host-reviews/{{stay?.ownerId}}">Host Grade: <b>9.3</b></a>
+        </div>
       </div>
     </div>
     <div class="row">

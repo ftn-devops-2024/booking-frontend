@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { Stay } from '../../model/stay';
 import { ReservationService } from '../../service/reservation.service';
 import { Reservation, ReservationDTO } from '../../model/reservation';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-stay-list-tile',
@@ -23,7 +24,8 @@ export class StayListTileComponent {
   @Input() numberOfGuests: number | undefined;
   role: string = sessionStorage.getItem('role') ?? '';
 
-  constructor(private reservationService: ReservationService) {}
+  constructor(private reservationService: ReservationService,
+              private toast: ToastrService) {}
 
   reserve() {
     let reservation: ReservationDTO = new ReservationDTO();
@@ -35,7 +37,10 @@ export class StayListTileComponent {
     reservation.endDate = this.endDate;
     reservation.guestId = sessionStorage.getItem('id') ?? '1';
     this.reservationService.createReservation(reservation).subscribe({
-      next: (data) => console.log(data),
+      next: (data) => {
+        console.log(data);
+        this.toast.success('Reservation created!');
+      },
       error: (data) => console.log(data),
     });
   }

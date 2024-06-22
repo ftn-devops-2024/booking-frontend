@@ -3,7 +3,17 @@
   <div class="row">
     <div class="container shadow-lg px-4 py-3 col-9 rounded-4 bg-light">
       <div class="row">
-        <h1 class="pb-3 col-10" style="font-size: 35px" >Stay Review</h1>
+        <h1 class="pb-3 col-8" style="font-size: 35px" >Stay Review</h1>
+        <div class="col-4 row">
+          <div class="col-8">
+            <h2 >Previous review: {{previousReview.rating}}</h2>
+          </div>
+          <div class="example-button-container col-4">
+            <button mat-mini-fab style="background-color: red" (click)="delete()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
       </div>
 
       <div>

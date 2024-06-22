@@ -3,6 +3,7 @@ import { MatButton } from '@angular/material/button';
 import { NgForOf, NgIf } from '@angular/common';
 import { ReservationService } from '../../service/reservation.service';
 import { Reservation } from '../../model/reservation';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-reservation-list-tile',
@@ -14,14 +15,17 @@ import { Reservation } from '../../model/reservation';
 export class ReservationListTileComponent {
   @Input() reservation: Reservation | undefined;
 
-  constructor(private reservationService: ReservationService) {}
+  constructor(private reservationService: ReservationService,private toastrService: ToastrService) {}
 
   approve() {
     if (this.reservation != undefined) {
       this.reservationService
         .approveReservation(this.reservation.id.toString())
         .subscribe({
-          next: (data) => console.log(data),
+          next: (data) => {
+            console.log(data);
+            this.toastrService.success("Reservation approved!");
+          },
           error: (data) => console.log(data),
         });
     }
@@ -32,7 +36,10 @@ export class ReservationListTileComponent {
       this.reservationService
         .rejectReservation(this.reservation.id.toString())
         .subscribe({
-          next: (data) => console.log(data),
+          next: (data) => {
+            console.log(data);
+            this.toastrService.success("Reservation rejected!");
+          },
           error: (data) => console.log(data),
         });
     }
