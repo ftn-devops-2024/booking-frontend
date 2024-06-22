@@ -4,16 +4,23 @@ import { HostReview } from '../../model/review';
 import { ReviewService } from '../../service/review.service';
 import { User } from '../../model/user';
 import { WebsocketService } from '../../service/websocket.service';
-import {NgForOf, NgIf} from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { ReservationService } from '../../service/reservation.service';
-import {MatIcon} from "@angular/material/icon";
-import {MatMiniFabButton} from "@angular/material/button";
-import {ToastrService} from "ngx-toastr";
+import { MatIcon } from '@angular/material/icon';
+import { MatMiniFabButton } from '@angular/material/button';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-host-review',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, NgForOf, MatIcon, MatMiniFabButton, NgIf],
+  imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    NgForOf,
+    MatIcon,
+    MatMiniFabButton,
+    NgIf,
+  ],
   templateUrl: './host-review.component.html',
   styleUrl: './host-review.component.scss',
 })
@@ -21,7 +28,7 @@ export class HostReviewComponent implements OnInit {
   hostReview: HostReview = new HostReview();
   hosts: User[] = [];
   id: string = sessionStorage.getItem('id') ?? '';
-  previousReview: HostReview|undefined;
+  previousReview: HostReview | undefined;
 
   constructor(
     private reviewService: ReviewService,
@@ -38,7 +45,7 @@ export class HostReviewComponent implements OnInit {
         console.log(data);
         this.hosts = data;
         this.hostReview.hostId = this.hosts[0]?.id ?? '';
-        this.getPrevious()
+        this.getPrevious();
       },
       error: (error) => {
         console.log(error);
@@ -46,15 +53,17 @@ export class HostReviewComponent implements OnInit {
     });
   }
 
-  getPrevious(){
-    this.reviewService.getUserHostReview(this.id,this.hostReview.hostId).subscribe(
-      {
+  getPrevious() {
+    this.reviewService
+      .getUserHostReview(this.id, this.hostReview.hostId)
+      .subscribe({
         next: (data) => {
           this.previousReview = data;
         },
-        error: (error) => {console.log(error);}
-      }
-    )
+        error: (error) => {
+          console.log(error);
+        },
+      });
   }
 
   rateHost() {
@@ -63,6 +72,8 @@ export class HostReviewComponent implements OnInit {
       next: (data) => {
         console.log(data);
         this.toast.success('Successfully rated host!');
+        this.getPrevious();
+        window.location.reload();
       },
       error: (error) => {
         console.log(error);
@@ -84,15 +95,19 @@ export class HostReviewComponent implements OnInit {
     const selectedValue = selectElement.value;
     console.log(selectedValue);
     this.hostReview.hostId = selectedValue;
-    this.getPrevious();
   }
 
-  delete(){
-    this.reviewService.deleteHostReview(this.previousReview?.id ?? 1).subscribe({
-      next: (data) => {console.log(data);
-        this.toast.success('Successfully deleted host review');
+  delete() {
+    this.reviewService
+      .deleteHostReview(this.previousReview?.id ?? 1)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+          this.toast.success('Successfully deleted host review');
         },
-      error: (error) => {console.log(error);}
-    })
+        error: (error) => {
+          console.log(error);
+        },
+      });
   }
 }

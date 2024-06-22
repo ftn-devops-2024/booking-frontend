@@ -47,7 +47,7 @@ export class HomepageComponent {
   startDate: Date = new Date();
   perks: String[] = ['Wi-fi', 'Parking', 'Pet friendly'];
   searchStay: SearchStay = new SearchStay();
-  foundStays: Stay[] = [new Stay()];
+  foundStays: Stay[] = [];
   days: number = 1;
 
   constructor(
@@ -79,6 +79,14 @@ export class HomepageComponent {
       next: (data) => {
         console.log(data);
         this.foundStays = data;
+        for (let s of this.foundStays) {
+          this.reservationService.getStay(s.id).subscribe({
+            next: (data) => {},
+            error: (error) => {
+              console.log(error);
+            },
+          });
+        }
       },
       error: (data) => console.log(data),
     });

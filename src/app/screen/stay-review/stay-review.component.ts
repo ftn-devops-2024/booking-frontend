@@ -4,16 +4,23 @@ import { HostReview, StayReview } from '../../model/review';
 import { ReviewService } from '../../service/review.service';
 import { Stay } from '../../model/stay';
 import { WebsocketService } from '../../service/websocket.service';
-import {NgForOf, NgIf} from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { ReservationService } from '../../service/reservation.service';
-import {MatIcon} from "@angular/material/icon";
-import {MatMiniFabButton} from "@angular/material/button";
-import {ToastrService} from "ngx-toastr";
+import { MatIcon } from '@angular/material/icon';
+import { MatMiniFabButton } from '@angular/material/button';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-stay-review',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, NgForOf, MatIcon, MatMiniFabButton, NgIf],
+  imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    NgForOf,
+    MatIcon,
+    MatMiniFabButton,
+    NgIf,
+  ],
   templateUrl: './stay-review.component.html',
   styleUrl: './stay-review.component.scss',
 })
@@ -21,13 +28,13 @@ export class StayReviewComponent implements OnInit {
   stayReview: StayReview = new StayReview();
   stays: Stay[] = [];
   id: string = sessionStorage.getItem('id') ?? '';
-  previousReview: StayReview|undefined;
+  previousReview: StayReview | undefined;
 
   constructor(
     private reviewService: ReviewService,
     private reservationService: ReservationService,
     private webSocketService: WebsocketService,
-    private toast: ToastrService,
+    private toast: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -46,15 +53,17 @@ export class StayReviewComponent implements OnInit {
     });
   }
 
-  getPrevious(){
-    this.reviewService.getUserAccommodationReview(this.id,this.stayReview.accommodationId).subscribe(
-      {
+  getPrevious() {
+    this.reviewService
+      .getUserAccommodationReview(this.id, this.stayReview.accommodationId)
+      .subscribe({
         next: (data) => {
           this.previousReview = data;
         },
-        error: (error) => {console.log(error);}
-      }
-    )
+        error: (error) => {
+          console.log(error);
+        },
+      });
   }
 
   rateStay() {
@@ -63,6 +72,8 @@ export class StayReviewComponent implements OnInit {
       next: (data) => {
         console.log(data);
         this.toast.success('Successfully rated stay!');
+        this.getPrevious();
+        window.location.reload();
       },
       error: (error) => {
         console.log(error);
@@ -84,16 +95,19 @@ export class StayReviewComponent implements OnInit {
     const selectedValue = selectElement.value;
     console.log(selectedValue);
     this.stayReview.accommodationId = Number(selectedValue);
-    this.getPrevious();
   }
 
-  delete(){
-    this.reviewService.deleteStayReview(this.previousReview?.id ?? 1).subscribe({
-      next: (data) => {
-        console.log(data);
-        this.toast.success('Successfully deleted stay review!');
-      },
-      error: (error) => {console.log(error);}
-    })
+  delete() {
+    this.reviewService
+      .deleteStayReview(this.previousReview?.id ?? 1)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+          this.toast.success('Successfully deleted stay review!');
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
   }
 }
