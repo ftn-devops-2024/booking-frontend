@@ -1,15 +1,20 @@
 <div class="row">
   <div class="col-3">
-    <img class="img-thumbnail" src="assets/ap1.jpg" >
+    <img class="img-thumbnail" [src]="photo">
   </div>
   <div class="col-9">
     <div class="row">
       <div class="col-5">
         <h2>{{stay?.name}}</h2>
       </div>
-      <div class="col-5"></div>
-      <div *ngIf="!isMyStays" class="col-2">
-        <p>Grade: <b>9.3</b></p>
+      <div class="col-4"></div>
+      <div *ngIf="!isMyStays" class="col-3 text-end">
+        <div class="pb-2">
+          <a href="/stay-reviews/{{stay?.id}}">Grade: <b>9.3</b></a>
+        </div>
+        <div class="pb-3">
+          <a href="/host-reviews/{{stay?.ownerId}}">Host Grade: <b>9.3</b></a>
+        </div>
       </div>
     </div>
     <div class="row">
@@ -23,7 +28,7 @@
       <div class="col-4 text-end">
         <p style="margin-top:-10px;margin-right: -30px">Price per day: {{stay?.pricePerDay}}$</p>
         <p *ngIf="!isMyStays" style="margin-top:-10px;margin-right: -30px">Price: <span style="color: red">{{(stay?.pricePerDay ?? 1)*(days ?? 1)}}$</span></p>
-        <button mat-flat-button color="primary" *ngIf="!isMyStays" style="margin-right: -30px">Reserve</button>
+        <button mat-flat-button color="primary" *ngIf="!isMyStays && role == 'ROLE_GUEST'" (click)="reserve()" style="margin-right: -30px">Reserve</button>
         <button mat-flat-button color="warn" [routerLink]="['/create-stay',stay?.id]" *ngIf="isMyStays" style="margin-right: -30px">Edit</button>
       </div>
     </div>

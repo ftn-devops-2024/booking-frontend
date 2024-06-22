@@ -54,6 +54,7 @@ export class CreateStayComponent implements OnInit {
   dropdownSettings: IDropdownSettings = {};
   today: Date = new Date();
   stayId: string = '';
+  photo: any;
 
   perkMap = {
     'Wi-fi': 'WIFI',
@@ -99,7 +100,7 @@ export class CreateStayComponent implements OnInit {
       this.stay.specialPrices.push(new SpecialPrices());
     } else {
       // Fetch stay details from the database
-      this.reservationService.getStay(this.stayId).subscribe({
+      this.reservationService.getStay(Number(this.stayId)).subscribe({
         next: (data) => {
           this.stay = data;
           this.selectedItems = this.stay.perks.map((perk) => ({
@@ -123,13 +124,12 @@ export class CreateStayComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    for (let f of event.target.files) {
-      console.log(f.name);
-      this.stay.photos.push(f.name);
-    }
+    this.photo = event.target.files[0];
   }
 
   save() {
+    this.stay.ownerId = sessionStorage.getItem('id') ?? '';
+
     this.stay.perks = this.selectedItems.map(
       (item) => this.perkMap[item.item_text as keyof typeof this.perkMap]
     );
@@ -139,6 +139,10 @@ export class CreateStayComponent implements OnInit {
       this.reservationService.createStay(this.stay).subscribe({
         next: (data) => {
           console.log(data);
+          if (this.photo != null)
+            this.reservationService
+              .uploadImage(data.id, this.photo)
+              .subscribe();
           this.toastr.success('Success!', 'Successfully created!');
         },
         error: (error) => console.log(error),

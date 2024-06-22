@@ -37,10 +37,16 @@ export class EditProfileComponent implements OnInit {
     // this.user = new User("Pera","Peric","pera@gmail.com","pera123","Cuprija");
   }
 
-  editUser() {
+  editUser(deleting: boolean) {
     this.userService.editUser(this.user).subscribe({
       next: (data) => {
-        this.toastr.success('Success!', 'Successfully edited!');
+        if (deleting) {
+          this.toastr.success('Success!', 'Successfully deleted!');
+          sessionStorage.clear();
+          window.location.href = '/';
+        } else {
+          this.toastr.success('Success!', 'Successfully edited!');
+        }
         console.log(data);
       },
       error: (error) => {
@@ -49,8 +55,8 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  deleteUser(){
+  deleteUser() {
     this.user.deleted = true;
-    this.editUser();
+    this.editUser(true);
   }
 }

@@ -1,0 +1,15 @@
+<div class="p-5 vh-100 hero-main">
+
+  <div class="row">
+    <div class="container shadow-lg px-4 py-3 col-10 rounded-4 bg-light">
+      <div class="row">
+        <h1 class="pb-3 col-10" style="font-size: 35px" >Host reviews</h1>
+      </div>
+      <div class="row pb-3" *ngFor="let r of reviews">
+        <h2><i class="fa-solid fa-star px-1 "></i> Guest <span style="color: darkred">{{ r.guestName }}</span> gave grade {{ r.rating }} to host <span style="color: darkred">{{ r.hostName }}</span></h2>
+      </div>
+      <mat-divider></mat-divider>
+      <h2 class="pt-3">Average grade: {{averageGrade}}</h2>
+    </div>
+  </div>
+</div>

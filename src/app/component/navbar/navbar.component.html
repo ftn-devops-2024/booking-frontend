@@ -32,7 +32,7 @@
       <a class="nav-item nav-link active" href="/notifications" *ngIf="role == 'ROLE_GUEST' || role == 'ROLE_HOST'">Notifications</a>
     </div>
   </div>
-  <a class="navbar-text nav-link mx-3" href="/" >
+  <a class="navbar-text nav-link mx-3" href="/" (click)="logout()">
     Logout
   </a>
 </nav>

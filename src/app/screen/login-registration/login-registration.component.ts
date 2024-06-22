@@ -1,22 +1,17 @@
 import { Component } from '@angular/core';
-import {FormGroup, FormsModule} from "@angular/forms";
-import {MatCardContent} from "@angular/material/card";
-import {MatProgressSpinner} from "@angular/material/progress-spinner";
-import {LoginInfo, User} from "../../model/user";
-import {CommonModule} from "@angular/common";
-import {AuthenticationService} from "../../service/authentication.service";
+import { FormGroup, FormsModule } from '@angular/forms';
+import { MatCardContent } from '@angular/material/card';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { LoginInfo, User } from '../../model/user';
+import { CommonModule } from '@angular/common';
+import { AuthenticationService } from '../../service/authentication.service';
 
 @Component({
   selector: 'app-login-registration',
   standalone: true,
-  imports: [
-    MatCardContent,
-    MatProgressSpinner,
-    FormsModule,
-    CommonModule
-  ],
+  imports: [MatCardContent, MatProgressSpinner, FormsModule, CommonModule],
   templateUrl: './login-registration.component.html',
-  styleUrl: './login-registration.component.scss'
+  styleUrl: './login-registration.component.scss',
 })
 export class LoginRegistrationComponent {
   showLogin: boolean = true;
@@ -27,16 +22,15 @@ export class LoginRegistrationComponent {
   isRegistered: boolean = false;
   reenterPass: string = '';
 
-  constructor(private authenticationService: AuthenticationService) {
-  }
+  constructor(private authenticationService: AuthenticationService) {}
 
   registerClick() {
     this.showLogin = false;
   }
 
-  loginUser(){
+  loginUser() {
     this.authenticationService.loginUser(this.loginInfo).subscribe({
-      next: data => {
+      next: (data) => {
         console.log(data);
         this.loginData = data;
         alert('Successfully logged in');
@@ -45,20 +39,25 @@ export class LoginRegistrationComponent {
         sessionStorage.setItem('role', this.loginData.role);
         sessionStorage.setItem('accessToken', this.loginData.token);
         sessionStorage.setItem('expiresIn', this.loginData.expiresIn);
-        },
-      error: error => {console.log(error);},
-    })
+        window.location.href = '/home';
+      },
+      error: (error) => {
+        console.log(error);
+        alert('Login failed!');
+      },
+    });
   }
 
-  registerUser(){
-    console.log(this.user)
+  registerUser() {
+    console.log(this.user);
     this.authenticationService.registerUser(this.user).subscribe({
-      next: data => {
+      next: (data) => {
         console.log(data);
         alert('Successfully registered!');
       },
-      error: error => {console.log(error);},
-    })
+      error: (error) => {
+        console.log(error);
+      },
+    });
   }
-
 }

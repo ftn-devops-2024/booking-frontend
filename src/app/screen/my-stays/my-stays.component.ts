@@ -42,22 +42,7 @@ import { WebsocketService } from '../../service/websocket.service';
   styleUrl: './my-stays.component.scss',
 })
 export class MyStaysComponent implements OnInit {
-  myStays: Stay[] = [
-    new Stay(
-      1,
-      '12',
-      'Superkul',
-      'Srbija',
-      ['Wi-fi', 'Pet friendly'],
-      [],
-      2,
-      10,
-      30,
-      [],
-      true,
-      []
-    ),
-  ];
+  myStays: Stay[] = [];
 
   constructor(
     private reservationService: ReservationService,
@@ -73,5 +58,10 @@ export class MyStaysComponent implements OnInit {
       },
       error: (data) => console.log(data),
     });
+  }
+
+  getPhoto(stay: Stay) {
+    if (stay.photo) return 'data:image/png;base64,' + stay.photo;
+    else return 'assets/ap1.jpg';
   }
 }

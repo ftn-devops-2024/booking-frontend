@@ -20,11 +20,36 @@ export class ReviewService {
     return this._http.post<any>(`${this.url}/accommodation`, info);
   }
 
-  getStays(userId: string) {
-    return this._http.get<any>(`${this.url}/` + userId);
+  getHostReviews(id:string){
+    return this._http.get<any>(`${this.url}/host/`+id);
   }
 
-  getHosts(userId: string) {
-    return this._http.get<any>(`${this.url}/` + userId);
+  getStayReviews(id:string){
+    return this._http.get<any>(`${this.url}/accommodation/`+id);
   }
+
+  getHostAverageGrade(id: string) {
+    return this._http.get<any>(`${this.url}/host/average/`+id);
+  }
+
+  getStayAverageGrade(id: string) {
+    return this._http.get<any>(`${this.url}/accommodation/average/`+id);
+  }
+
+  getUserHostReview(userId: string,hostId: string) {
+    return this._http.post<any>(`${this.url}/host/user`,{'userId':userId,'hostId':hostId});
+  }
+
+  getUserAccommodationReview(userId: string,accommodationId: number) {
+    return this._http.post<any>(`${this.url}/accommodation/user`,{'userId':userId,'accommodationId':accommodationId});
+  }
+
+  deleteStayReview(reviewId: number) {
+    return this._http.delete<any>(`${this.url}/accommodation/`+reviewId);
+  }
+
+  deleteHostReview(reviewId: number) {
+    return this._http.delete<any>(`${this.url}/host/`+reviewId);
+  }
+
 }

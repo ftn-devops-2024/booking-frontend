@@ -3,15 +3,27 @@
   <div class="row">
     <div class="container shadow-lg px-4 py-3 col-9 rounded-4 bg-light">
       <div class="row">
-        <h1 class="pb-3 col-10" style="font-size: 35px" >Host Review</h1>
+        <h1 class="pb-3 col-8" style="font-size: 35px" >Host Review</h1>
+        <div class="col-4 row">
+          <div class="col-8" *ngIf="previousReview !== undefined">
+            <h2 >Previous review: {{previousReview.rating}}</h2>
+          </div>
+          <div class="example-button-container col-4" *ngIf="previousReview !== undefined && previousReview !== null">
+          <button mat-mini-fab style="background-color: red" (click)="delete()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        </div>
       </div>
 
       <div>
         <div class="row pt-3 px-2">
 
           <div class="col-6 pb-3">
-            <select class="form-select" aria-label="Default select example">
-              <option value="guest" *ngFor="let h of hosts">{{h.name}} {{h.surname}}</option>
+            <select class="form-select" aria-label="Default select example" (change)="hostChange($event)">
+              <ng-container *ngFor="let h of hosts">
+                <option [value]="h.id" >{{h.name}} {{h.surname}}</option>
+              </ng-container>
             </select>
           </div>
 

@@ -18,9 +18,9 @@
     <h3>Guests: <b>{{reservation?.numberOfGuests}}</b></h3>
   </div>
   <div class="col-1">
-    <button mat-flat-button color="warn" (click)="approve()">Approve</button>
+    <button mat-flat-button color="warn" [disabled]="reservation?.status != 'PENDING'" (click)="approve()">Approve</button>
   </div>
   <div class="col-1">
-    <button mat-flat-button color="warn" (click)="decline()">Decline</button>
+    <button mat-flat-button color="warn" [disabled]="reservation?.status != 'PENDING'" (click)="decline()">Decline</button>
   </div>
 </div>
