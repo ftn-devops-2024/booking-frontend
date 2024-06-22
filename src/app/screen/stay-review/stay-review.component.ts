@@ -4,7 +4,7 @@ import { HostReview, StayReview } from '../../model/review';
 import { ReviewService } from '../../service/review.service';
 import { Stay } from '../../model/stay';
 import { WebsocketService } from '../../service/websocket.service';
-import { NgForOf } from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import { ReservationService } from '../../service/reservation.service';
 import {MatIcon} from "@angular/material/icon";
 import {MatMiniFabButton} from "@angular/material/button";
@@ -13,7 +13,7 @@ import {ToastrService} from "ngx-toastr";
 @Component({
   selector: 'app-stay-review',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, NgForOf, MatIcon, MatMiniFabButton],
+  imports: [ReactiveFormsModule, FormsModule, NgForOf, MatIcon, MatMiniFabButton, NgIf],
   templateUrl: './stay-review.component.html',
   styleUrl: './stay-review.component.scss',
 })
@@ -21,7 +21,7 @@ export class StayReviewComponent implements OnInit {
   stayReview: StayReview = new StayReview();
   stays: Stay[] = [];
   id: string = sessionStorage.getItem('id') ?? '';
-  previousReview: StayReview = new StayReview();
+  previousReview: StayReview|undefined;
 
   constructor(
     private reviewService: ReviewService,
@@ -88,7 +88,7 @@ export class StayReviewComponent implements OnInit {
   }
 
   delete(){
-    this.reviewService.deleteStayReview(this.previousReview.id).subscribe({
+    this.reviewService.deleteStayReview(this.previousReview?.id ?? 1).subscribe({
       next: (data) => {
         console.log(data);
         this.toast.success('Successfully deleted stay review!');

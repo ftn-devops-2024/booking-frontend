@@ -4,7 +4,7 @@ import { HostReview } from '../../model/review';
 import { ReviewService } from '../../service/review.service';
 import { User } from '../../model/user';
 import { WebsocketService } from '../../service/websocket.service';
-import { NgForOf } from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import { ReservationService } from '../../service/reservation.service';
 import {MatIcon} from "@angular/material/icon";
 import {MatMiniFabButton} from "@angular/material/button";
@@ -13,7 +13,7 @@ import {ToastrService} from "ngx-toastr";
 @Component({
   selector: 'app-host-review',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, NgForOf, MatIcon, MatMiniFabButton],
+  imports: [ReactiveFormsModule, FormsModule, NgForOf, MatIcon, MatMiniFabButton, NgIf],
   templateUrl: './host-review.component.html',
   styleUrl: './host-review.component.scss',
 })
@@ -21,7 +21,7 @@ export class HostReviewComponent implements OnInit {
   hostReview: HostReview = new HostReview();
   hosts: User[] = [];
   id: string = sessionStorage.getItem('id') ?? '';
-  previousReview: HostReview = new HostReview();
+  previousReview: HostReview|undefined;
 
   constructor(
     private reviewService: ReviewService,
@@ -88,7 +88,7 @@ export class HostReviewComponent implements OnInit {
   }
 
   delete(){
-    this.reviewService.deleteHostReview(this.previousReview.id).subscribe({
+    this.reviewService.deleteHostReview(this.previousReview?.id ?? 1).subscribe({
       next: (data) => {console.log(data);
         this.toast.success('Successfully deleted host review');
         },
