@@ -11,25 +11,25 @@
       <div style="height: 10px">
       </div>
       <div class="form-check form-switch" *ngIf="user.role == 'ROLE_HOST'">
-        <input class="form-check-input" style="height: 25px;width: 50px" [(ngModel)]="user.reservationCanceled"  type="checkbox" role="switch" id="flexSwitchCheckChecked" >
+        <input class="form-check-input" (change)="editUser()" style="height: 25px;width: 50px" [(ngModel)]="user.reservationCanceled"  type="checkbox" role="switch" id="flexSwitchCheckChecked" >
         <label class="form-check-label px-2" style="font-size: 19px;padding-top: 7px" for="flexSwitchCheckChecked">On reservation canceled</label>
       </div>
       <div style="height: 10px">
       </div>
       <div class="form-check form-switch" *ngIf="user.role == 'ROLE_HOST'">
-        <input class="form-check-input" style="height: 25px;width: 50px" type="checkbox" [(ngModel)]="user.hostReview"  role="switch" id="flexSwitchCheckDisabled" >
+        <input class="form-check-input" (change)="editUser()" style="height: 25px;width: 50px" type="checkbox" [(ngModel)]="user.hostReview"  role="switch" id="flexSwitchCheckDisabled" >
         <label class="form-check-label px-2" style="font-size: 19px;padding-top: 7px" for="flexSwitchCheckDisabled">On host review</label>
       </div>
       <div style="height: 10px">
       </div>
       <div class="form-check form-switch" *ngIf="user.role == 'ROLE_HOST'">
-        <input class="form-check-input"  style="height: 25px;width: 50px" type="checkbox" [(ngModel)]="user.accommodationReview"  role="switch" id="flexSwitchCheckCheckedDisabled">
+        <input class="form-check-input" (change)="editUser()" style="height: 25px;width: 50px" type="checkbox" [(ngModel)]="user.accommodationReview"  role="switch" id="flexSwitchCheckCheckedDisabled">
         <label class="form-check-label px-2" style="font-size: 19px;padding-top: 7px" for="flexSwitchCheckCheckedDisabled">On accommodation review</label>
       </div>
       <div style="height: 10px">
       </div>
       <div class="form-check form-switch" *ngIf="user.role == 'ROLE_GUEST'">
-        <input class="form-check-input" type="checkbox" style="height: 25px;width: 50px" role="switch" [(ngModel)]="user.hostResponse"  id="flexSwitchCheckCheckedDisabled2">
+        <input class="form-check-input" (change)="editUser()" type="checkbox" style="height: 25px;width: 50px" role="switch" [(ngModel)]="user.hostResponse"  id="flexSwitchCheckCheckedDisabled2">
         <label class="form-check-label px-2 " style="font-size: 19px;padding-top: 7px" for="flexSwitchCheckCheckedDisabled2">On host responded to request</label>
       </div>
       <div style="height: 20px">
