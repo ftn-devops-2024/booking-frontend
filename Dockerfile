@@ -21,9 +21,9 @@ FROM nginx:alpine
 
 # Copy the built Angular application from the previous stage
 COPY --from=build /app/dist/reservation-client/browser /usr/share/nginx/html
+COPY ["nginx.conf", "/etc/nginx/nginx.conf"]
 
 # Expose port 80
 EXPOSE 80
 
 # Start nginx
-CMD ["nginx", "-g", "daemon off;"]
