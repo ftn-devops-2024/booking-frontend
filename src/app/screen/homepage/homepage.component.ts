@@ -47,22 +47,7 @@ export class HomepageComponent {
   startDate: Date = new Date();
   perks: String[] = ['Wi-fi', 'Parking', 'Pet friendly'];
   searchStay: SearchStay = new SearchStay();
-  foundStays: Stay[] = [
-    new Stay(
-      1,
-      '12',
-      'Superkul',
-      'Srbija',
-      ['Wi-fi', 'Pet friendly'],
-      [],
-      2,
-      10,
-      30,
-      [],
-      true,
-      []
-    ),
-  ];
+  foundStays: Stay[] = [];
   days: number = 1;
 
   constructor(
@@ -97,5 +82,10 @@ export class HomepageComponent {
       },
       error: (data) => console.log(data),
     });
+  }
+
+  getPhoto(stay: Stay) {
+    if (stay.photo) return 'data:image/png;base64,' + stay.photo;
+    else return 'assets/ap1.jpg';
   }
 }

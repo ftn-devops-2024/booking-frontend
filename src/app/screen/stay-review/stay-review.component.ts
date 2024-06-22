@@ -4,35 +4,35 @@ import { HostReview, StayReview } from '../../model/review';
 import { ReviewService } from '../../service/review.service';
 import { Stay } from '../../model/stay';
 import { WebsocketService } from '../../service/websocket.service';
-import {NgForOf} from "@angular/common";
+import { NgForOf } from '@angular/common';
+import { ReservationService } from '../../service/reservation.service';
 
 @Component({
   selector: 'app-stay-review',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    FormsModule,
-    NgForOf
-  ],
+  imports: [ReactiveFormsModule, FormsModule, NgForOf],
   templateUrl: './stay-review.component.html',
   styleUrl: './stay-review.component.scss',
 })
 export class StayReviewComponent implements OnInit {
   stayReview: StayReview = new StayReview();
   stays: Stay[] = [];
+  id: string = sessionStorage.getItem('id') ?? '';
 
   constructor(
     private reviewService: ReviewService,
+    private reservationService: ReservationService,
     private webSocketService: WebsocketService
   ) {}
 
   ngOnInit(): void {
     //dobavi sve smestaje kod kojih je user bio
     let userId = sessionStorage.getItem('id');
-    this.reviewService.getStays(userId ?? '1').subscribe({
+    this.reservationService.getUserStays(userId ?? '1').subscribe({
       next: (data) => {
         console.log(data);
         this.stays = data;
+        this.stayReview.accommodationId = this.stays[0]?.id ?? 1;
       },
       error: (error) => {
         console.log(error);
@@ -41,6 +41,7 @@ export class StayReviewComponent implements OnInit {
   }
 
   rateStay() {
+    this.stayReview.guestId = this.id;
     this.reviewService.stayReview(this.stayReview).subscribe({
       next: (data) => {
         console.log(data);
@@ -51,7 +52,7 @@ export class StayReviewComponent implements OnInit {
     });
   }
 
-  gradeChange(event: Event){
+  gradeChange(event: Event) {
     console.log(event);
     const selectElement = event.target as HTMLSelectElement;
     const selectedValue = selectElement.value;
@@ -59,4 +60,11 @@ export class StayReviewComponent implements OnInit {
     this.stayReview.rating = Number(selectedValue);
   }
 
+  stayChange(event: Event) {
+    console.log(event);
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedValue = selectElement.value;
+    console.log(selectedValue);
+    this.stayReview.accommodationId = Number(selectedValue);
+  }
 }

@@ -10,8 +10,10 @@
         <div class="row pt-3 px-2">
 
           <div class="col-6 pb-3">
-            <select class="form-select" aria-label="Default select example">
-              <option value="guest" *ngFor="let h of hosts">{{h.name}} {{h.surname}}</option>
+            <select class="form-select" aria-label="Default select example" (change)="hostChange($event)">
+              <ng-container *ngFor="let h of hosts">
+                <option [value]="h.id" >{{h.name}} {{h.surname}}</option>
+              </ng-container>
             </select>
           </div>
 

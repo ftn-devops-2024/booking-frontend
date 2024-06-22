@@ -5,7 +5,7 @@ export class Stay {
     public name: string = '',
     public location: string = '',
     public perks: string[] = [],
-    public photos: string[] = [],
+    public photo: string = '',
     public minGuests: number = 0,
     public maxGuests: number = 10,
     public pricePerDay: number = 1,
@@ -18,16 +18,15 @@ export class Stay {
 export class DateRange {
   constructor(
     public startDate: Date = new Date(),
-    public endDate: Date = new Date(2024,11,1,),
-  ) {
-  }
+    public endDate: Date = new Date(2024, 11, 1)
+  ) {}
 }
 
 export class SpecialPrices {
   constructor(
     public startDate: Date = new Date(),
-    public endDate: Date = new Date(2024,11,1),
-    public price:number = 0
+    public endDate: Date = new Date(2024, 11, 1),
+    public price: number = 0
   ) {}
 }
 

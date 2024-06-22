@@ -62,19 +62,17 @@ export class WebsocketService {
         '/notification/reservation-created',
         (message: { body: any }) => {
           let r: ReservationDto = JSON.parse(message.body);
-          this.reservationService
-            .getStay(r.accommodationId.toString())
-            .subscribe({
-              next: (data) => {
-                let stay: Stay = data;
-                if (stay.ownerId == this.id)
-                  this.toast.success(
-                    'A new reservation has been made.',
-                    'New reservation'
-                  );
-              },
-              error: (error) => console.log(error),
-            });
+          this.reservationService.getStay(r.accommodationId).subscribe({
+            next: (data) => {
+              let stay: Stay = data;
+              if (stay.ownerId == this.id)
+                this.toast.success(
+                  'A new reservation has been made.',
+                  'New reservation'
+                );
+            },
+            error: (error) => console.log(error),
+          });
         }
       );
 
@@ -83,19 +81,17 @@ export class WebsocketService {
         '/notification/reservation-cancelled',
         (message: { body: any }) => {
           let r: ReservationDto = JSON.parse(message.body);
-          this.reservationService
-            .getStay(r.accommodationId.toString())
-            .subscribe({
-              next: (data) => {
-                let stay: Stay = data;
-                if (stay.ownerId == this.id)
-                  this.toast.success(
-                    'Reservation has been canceled.',
-                    'Reservation canceled'
-                  );
-              },
-              error: (error) => console.log(error),
-            });
+          this.reservationService.getStay(r.accommodationId).subscribe({
+            next: (data) => {
+              let stay: Stay = data;
+              if (stay.ownerId == this.id)
+                this.toast.success(
+                  'Reservation has been canceled.',
+                  'Reservation canceled'
+                );
+            },
+            error: (error) => console.log(error),
+          });
         }
       );
   }

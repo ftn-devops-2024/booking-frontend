@@ -5,7 +5,6 @@ export const interceptInterceptor: HttpInterceptorFn = (req, next) => {
 
   const webSocketEndpoints = ['/review-ws', '/reservation-ws'];
 
-  console.log('hereeeeeeeeeeee');
   // Check if the request URL contains any of the WebSocket endpoint paths
   const isWebSocketRequest = webSocketEndpoints.some((endpoint) => {
     console.log(req.url);
@@ -18,16 +17,25 @@ export const interceptInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req);
   }
 
-  // Clone the request and add the authorization header
-  const authReq = req.clone({
-    setHeaders: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${authToken}`,
-    },
-    withCredentials: true,
-  });
+  let authReq;
+  if (req.url.includes('uploadImage')) {
+    authReq = req.clone({
+      setHeaders: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      withCredentials: true,
+    });
+  } else {
+    authReq = req.clone({
+      setHeaders: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      withCredentials: true,
+    });
+  }
 
-  // Pass the cloned request with the updated header to the next handler
   return next(authReq);
 };

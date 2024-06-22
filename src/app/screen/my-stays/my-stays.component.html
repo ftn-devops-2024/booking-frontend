@@ -7,7 +7,7 @@
         <div class="row  px-2">
           <div class="pt-3 list-group">
             <div *ngFor="let stay of myStays">
-              <app-stay-list-tile [isMyStays]="true" [stay]="stay" class="pt-3 row list-group-item"></app-stay-list-tile>
+              <app-stay-list-tile [isMyStays]="true" [stay]="stay" [photo]="getPhoto(stay)" class="pt-3 row list-group-item"></app-stay-list-tile>
             </div>
           </div>
 

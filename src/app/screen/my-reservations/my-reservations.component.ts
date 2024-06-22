@@ -5,6 +5,7 @@ import { Reservation } from '../../model/reservation';
 import { ReservationService } from '../../service/reservation.service';
 import { NgForOf } from '@angular/common';
 import { WebsocketService } from '../../service/websocket.service';
+import { Stay } from '../../model/stay';
 
 @Component({
   selector: 'app-my-reservations',
@@ -18,7 +19,7 @@ import { WebsocketService } from '../../service/websocket.service';
   styleUrl: './my-reservations.component.scss',
 })
 export class MyReservationsComponent implements OnInit {
-  reservations: Reservation[] = [new Reservation()];
+  reservations: Reservation[] = [];
 
   constructor(
     private reservationService: ReservationService,
@@ -30,7 +31,23 @@ export class MyReservationsComponent implements OnInit {
     this.reservationService.getAllReservations(userId ?? '1').subscribe({
       next: (data) => {
         console.log(data);
-        this.reservations = data;
+        for (let d of data) {
+          let reservation = d;
+          reservation.startDate = new Date(
+            d.startDate[0],
+            d.startDate[1],
+            d.startDate[2]
+          );
+          reservation.endDate = new Date(
+            d.endDate[0],
+            d.endDate[1],
+            d.endDate[2]
+          );
+          reservation.accommodation = new Stay();
+          reservation.accommodation.name = d.accommodationName;
+          reservation.status = d.status;
+          this.reservations.push(reservation);
+        }
       },
       error: (data) => console.log(data),
     });
