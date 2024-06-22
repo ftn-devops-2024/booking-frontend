@@ -8,13 +8,13 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN yarn install
+RUN npm install
 
 # Copy the rest of the application code
 COPY . .
 
 # Build the Angular application
-RUN yarn run build
+RUN npm run build
 
 # Stage 2: Serve the application with nginx
 FROM nginx:alpine
